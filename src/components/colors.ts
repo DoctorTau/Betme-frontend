@@ -1,4 +1,4 @@
 export const colors = {
-    primaryYellow: '#f7ce5b',
+    primaryYellow: 'var(--betme-yellow)',
     primaryBlack: '#1E1E24',
 };

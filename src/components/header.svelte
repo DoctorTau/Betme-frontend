@@ -14,7 +14,7 @@
 
 <style>
 	.topbar {
-		background-color: #f7ce5b;
+		background-color: var(--betme-yellow);
 		color: white;
 		height: 50px;
 		display: flex;
@@ -26,7 +26,7 @@
 
 	.profile-button {
 		background-color: white;
-		color: #f7ce5b;
+		color: var(--betme-yellow);
 		border: none;
 		padding: 8px 16px;
 		border-radius: 4px;
