@@ -1,2 +1,14 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import Loginform from '../components/loginform.svelte';
+
+	let showModal = true;
+	let handleDone = () => {
+		showModal = false;
+	};
+</script>
+
+<div class="root" />
+<div id="loginform" class:showed={showModal}>
+	<Loginform on:login={handleDone} on:register={handleDone} />
+</div>
+
