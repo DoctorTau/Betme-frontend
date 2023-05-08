@@ -7,19 +7,18 @@ export class User {
 		this.loggedIn = loggedIn;
 	}
 
-	public ParseFromJWT(token: string): void {
+	public static async ParseFromJWT(token: string): Promise<User> {
 		if (token == "") {
-			this.username = "";
-			this.loggedIn = false;
-			return;
+			return new User("", false);
 		}
 
 		// Read claims from JWT
 		const claims = token.split(".")[1];
 		const claimsJson = atob(claims);
-		const claimsObj = JSON.parse(claimsJson);
+		const claimsObj = await JSON.parse(claimsJson);
 
-		this.username = claimsObj["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
-		this.loggedIn = true;
+		const username = claimsObj["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+
+        return new User(username, true);
 	}
 }

@@ -1,14 +1,31 @@
 <script lang="ts">
-	import Loginform from '../components/loginform.svelte';
+	import { onMount } from "svelte";
+	import Loginform from "../components/loginform.svelte";
+	import { User } from "../logic/user";
+	import { tokenStore } from "../store";
 
-	let showModal = true;
-	let handleDone = () => {
-		showModal = false;
-	};
+	$: user = new User("", false);
+	let message: string;
+
+	onMount(async () => {
+		tokenStore.useLocalStorage();
+		tokenStore.subscribe(async (value) => {
+			user = await User.ParseFromJWT(value);
+		});
+
+		user = await User.ParseFromJWT(
+			localStorage.getItem("token") ? "" : localStorage.getItem("token")!
+		);
+		console.log(user);
+	});
 </script>
 
-<div class="root" />
-<div id="loginform" class:showed={showModal}>
-	<Loginform on:login={handleDone} on:register={handleDone} />
-</div>
+<div class="root">
+	{#if !user.loggedIn}
+		<div id="loginform">
+			<Loginform />
+		</div>
+	{:else}{/if}
 
+	<div>{user.username == "" ? "kek" : user.username}</div>
+</div>

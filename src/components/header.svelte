@@ -1,23 +1,25 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { logout } from "../logic/login";
-	import type { User } from "../logic/user";
+	import { User } from "../logic/user";
 	import { tokenStore } from "../store";
 
-	export let user: User;
-
-	onMount(() => {
-		tokenStore.subscribe((value) => {
-			user.ParseFromJWT(value);
+	$: user = new User("", false);
+	onMount(async () => {
+		tokenStore.useLocalStorage();
+		tokenStore.subscribe(async (value) => {
+			user = await User.ParseFromJWT(value);
 		});
 
-		user.ParseFromJWT(localStorage.getItem("token")!);
+		user = await User.ParseFromJWT(
+			localStorage.getItem("token") ? "" : localStorage.getItem("token")!
+		);
 	});
 </script>
 
 <div class="topbar">
 	<h1>Bet Me</h1>
-	{#if user.loggedIn == true}
+	{#if user.loggedIn}
 		<button
 			class="profile-button"
 			on:click={() => {
