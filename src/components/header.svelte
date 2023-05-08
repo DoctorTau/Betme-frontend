@@ -1,14 +1,29 @@
 <script lang="ts">
-	import { colors } from './colors';
-	export let loggedIn: boolean = false;
+	import { onMount } from "svelte";
+	import { logout } from "../logic/login";
+	import type { User } from "../logic/user";
+	import { tokenStore } from "../store";
+
+	export let user: User;
+
+	onMount(() => {
+		tokenStore.subscribe((value) => {
+			user.ParseFromJWT(value);
+		});
+
+		user.ParseFromJWT(localStorage.getItem("token")!);
+	});
 </script>
 
 <div class="topbar">
 	<h1>Bet Me</h1>
-	{#if loggedIn}
-		<button class="profile-button">Profile</button>
-	{:else}
-		<button class="profile-button">Login/Register</button>
+	{#if user.loggedIn == true}
+		<button
+			class="profile-button"
+			on:click={() => {
+				logout();
+			}}>Выход</button
+		>
 	{/if}
 </div>
 
@@ -34,12 +49,11 @@
 		cursor: pointer;
 	}
 
-	/* style for h1 */
 	h1 {
 		color: white;
 		font-size: 30px;
 		font-weight: bold;
-		font-family: 'Monserat', sans-serif;
+		font-family: "Monserat", sans-serif;
 		display: flex;
 	}
 </style>

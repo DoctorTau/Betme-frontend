@@ -1,21 +1,12 @@
-<!-- Create a simple login form in svelte kit  -->
-
-<!-- Path: src/components/loginform.svelte -->
-
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import { login, register } from '../logic/login';
-	import { goto } from '$app/navigation';
-	import { fade } from 'svelte/transition';
-	import ToggleSwitch from './toggleSwitch.svelte';
-
-	const dispatch = createEventDispatcher();
+	import { login, register } from "../logic/login";
+	import ToggleSwitch from "./toggleSwitch.svelte";
 
 	let regForm = false;
 
-	let name = '';
-	let email = '';
-	let password = '';
+	let name = "";
+	let email = "";
+	let password = "";
 
 	let handleLogin = async () => {
 		try {
@@ -92,7 +83,7 @@
 	.loginform__title {
 		font-size: 30px;
 		font-weight: bold;
-		font-family: 'Monserat', sans-serif;
+		font-family: "Monserat", sans-serif;
 		margin-bottom: 20px;
 	}
 
