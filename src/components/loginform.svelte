@@ -50,11 +50,15 @@
 			<button class="loginform__button" on:click={handleLogin}> Login </button>
 		{/if}
 
-		<ToggleSwitch
-			func={() => {
-				regForm = !regForm;
-			}}
-		/>
+		<div class="toggler">
+			<label> Вход </label>
+			<ToggleSwitch
+				func={() => {
+					regForm = !regForm;
+				}}
+			/>
+			<label> Регистрация </label>
+		</div>
 	</div>
 </div>
 
@@ -100,8 +104,21 @@
 		border: none;
 		margin-bottom: 10px;
 		background-color: white;
-		color: var(--betme-yellow);
+		color: var(--betme-black);
 		font-weight: bold;
 		cursor: pointer;
+	}
+
+	.toggler {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.toggler label {
+		font-size: 20px;
+		font-weight: bold;
+		font-family: "Monserat", sans-serif;
+		margin: 0 10px;
 	}
 </style>
