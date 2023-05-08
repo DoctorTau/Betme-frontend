@@ -1,4 +1,4 @@
-export class User {
+export class UserDto {
 	public username: string = "";
 	public loggedIn: boolean = false;
 
@@ -7,9 +7,9 @@ export class User {
 		this.loggedIn = loggedIn;
 	}
 
-	public static async ParseFromJWT(token: string): Promise<User> {
+	public static async ParseFromJWT(token: string): Promise<UserDto> {
 		if (token == "") {
-			return new User("", false);
+			return new UserDto("", false);
 		}
 
 		// Read claims from JWT
@@ -19,6 +19,6 @@ export class User {
 
 		const username = claimsObj["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
 
-        return new User(username, true);
+		return new UserDto(username, true);
 	}
 }

@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { logout } from "../logic/login";
-	import { User } from "../logic/user";
+	import { UserDto } from "../logic/UserDto";
 	import { tokenStore } from "../store";
 
-	$: user = new User("", false);
+	$: user = new UserDto("", false);
 	onMount(async () => {
 		tokenStore.useLocalStorage();
 		tokenStore.subscribe(async (value) => {
-			user = await User.ParseFromJWT(value);
+			user = await UserDto.ParseFromJWT(value);
 		});
 
-		user = await User.ParseFromJWT(
+		user = await UserDto.ParseFromJWT(
 			localStorage.getItem("token") ? "" : localStorage.getItem("token")!
 		);
 	});

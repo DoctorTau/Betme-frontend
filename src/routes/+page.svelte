@@ -1,19 +1,19 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import Loginform from "../components/loginform.svelte";
-	import { User } from "../logic/user";
+	import { UserDto } from "../models/UserDto";
 	import { tokenStore } from "../store";
 
-	$: user = new User("", false);
+	$: user = new UserDto("", false);
 	let message: string;
 
 	onMount(async () => {
 		tokenStore.useLocalStorage();
 		tokenStore.subscribe(async (value) => {
-			user = await User.ParseFromJWT(value);
+			user = await UserDto.ParseFromJWT(value);
 		});
 
-		user = await User.ParseFromJWT(
+		user = await UserDto.ParseFromJWT(
 			localStorage.getItem("token") ? "" : localStorage.getItem("token")!
 		);
 		console.log(user);
