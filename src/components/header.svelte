@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { logout } from "../logic/login";
-	import { UserDto } from "../logic/UserDto";
+	import { UserDto } from "../models/UserDto";
 	import { tokenStore } from "../store";
 
-	$: user = new UserDto("", false);
+	$: user = new UserDto(0, "", false);
 	onMount(async () => {
 		tokenStore.useLocalStorage();
 		tokenStore.subscribe(async (value) => {

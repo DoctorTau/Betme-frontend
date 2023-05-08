@@ -3,29 +3,29 @@
 	import Loginform from "../components/loginform.svelte";
 	import { UserDto } from "../models/UserDto";
 	import { tokenStore } from "../store";
+	import BetsPage from "../components/betsPage.svelte";
 
-	$: user = new UserDto("", false);
-	let message: string;
+	$: userDto = new UserDto(0, "", false);
+	$: token = "";
 
 	onMount(async () => {
+		token = localStorage.getItem("token") ? "" : localStorage.getItem("token")!;
+
 		tokenStore.useLocalStorage();
 		tokenStore.subscribe(async (value) => {
-			user = await UserDto.ParseFromJWT(value);
+			userDto = await UserDto.ParseFromJWT(value);
+			token = value;
 		});
+		// console.log(token);
 
-		user = await UserDto.ParseFromJWT(
-			localStorage.getItem("token") ? "" : localStorage.getItem("token")!
-		);
-		console.log(user);
+		userDto = await UserDto.ParseFromJWT(token);
 	});
 </script>
 
 <div class="root">
-	{#if !user.loggedIn}
-		<div id="loginform">
-			<Loginform />
-		</div>
-	{:else}{/if}
-
-	<div>{user.username == "" ? "kek" : user.username}</div>
+	{#if !userDto.loggedIn}
+		<Loginform />
+	{:else}
+		<BetsPage userDto={userDto} />
+	{/if}
 </div>

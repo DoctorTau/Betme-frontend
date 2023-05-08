@@ -9,3 +9,4 @@ export interface User {
 	role: UserRole;
 	numberOfWins: number;
 }
+
