@@ -93,6 +93,31 @@ then comes description, and then the possible outcomes in column,
 					</div>
 				{/each}
 			</div>
+
+			<!--separator  -->
+			<hr />
+
+			{#if bet.status == BetStatus.Closed}
+				<div class="winner__section">
+					<div class="outcome__row">
+						<div class="outcome">
+							<div class="outcome__title">Победители</div>
+							<div class="winner__section">
+								<div class="outcome__users">
+									{#each bet.outcomes as outcome}
+										{#if outcome.id == bet.winOutcomeId}
+											<div class="outcome__title__centered">{outcome.name}</div>
+											{#each outcome.users as user}
+												<div class="outcome__users__user">{user.name}</div>
+											{/each}
+										{/if}
+									{/each}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{/if}
 		</div>
 		{#if bet.status == BetStatus.Creating && currentUser != null && isParticipant && bet.creatorId == currentUser.id}
 			<button
@@ -264,5 +289,23 @@ then comes description, and then the possible outcomes in column,
 		font-size: 16px;
 		text-align: center;
 		color: var(--betme-red);
+	}
+
+	.winner__section {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.outcome__title__centered{
+		font-family: "Montserrat", sans-serif;
+		font-size: 16px;
+		font-weight: bold;
+		text-align: center;
+		color: var(--betme-black);
+
+		display: flex;
+		align-self: center;
 	}
 </style>
