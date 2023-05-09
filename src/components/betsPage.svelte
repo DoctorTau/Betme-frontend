@@ -5,6 +5,7 @@
 	import { GetAllUsersBets, GetUserById } from "../logic/getters";
 	import type { Bet } from "../models/Bet";
 	import BetCard from "./betCard.svelte";
+	import CreateBetCard from "./createBetCard.svelte";
 
 	export let userDto: UserDto;
 	let user: User;
@@ -28,6 +29,8 @@
 				</div>
 			</div>
 		{/each}
+
+		<CreateBetCard />
 	</div>
 </div>
 

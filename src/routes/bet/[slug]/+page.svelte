@@ -159,5 +159,6 @@ then comes description, and then the possible outcomes in column,
 		font-size: 16px;
 		font-weight: bold;
 		margin-top: 5px;
+		cursor: pointer;
 	}
 </style>
