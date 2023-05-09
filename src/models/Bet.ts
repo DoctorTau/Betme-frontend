@@ -1,6 +1,7 @@
 import type { BetStatus } from "./BetStatus";
 import type { Outcome } from "./Outcome";
 import type { User } from "./User";
+import type { UserBet } from "./UserBet";
 
 export interface Bet {
 	id: number;
@@ -13,5 +14,5 @@ export interface Bet {
 	winOutcomeId: number;
 
 	outcomes: Outcome[];
-	participants: User[];
+	participants: UserBet[];
 }

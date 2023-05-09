@@ -46,6 +46,9 @@ export async function GetBetById(betId: number): Promise<Bet> {
 	}
 
 	const bet = await response.json();
+
+	bet.outcomes = await GetAllBetsOutcomes(betId);
+	bet.participants = await GetAllBetParticipants(betId);
 	return bet;
 }
 
@@ -56,6 +59,15 @@ export async function GetAllBetsOutcomes(betId: number): Promise<Outcome[]> {
 	}
 
 	const outcomes = await response.json();
+	const allBetUsers = await GetAllBetParticipants(betId);
+	for(let i = 0; i < outcomes.length; i++) {
+		outcomes[i].users = [];
+		for(let j = 0; j < allBetUsers.length; j++) {
+			if (allBetUsers[j].outcomeId == outcomes[i].id) {
+				outcomes[i].users.push(await GetUserById(allBetUsers[j].userId));
+			}
+		}
+	}
 	return outcomes;
 }
 

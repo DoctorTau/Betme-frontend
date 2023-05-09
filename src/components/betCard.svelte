@@ -2,6 +2,7 @@
 	import { onMount } from "svelte";
 	import type { Bet } from "../models/Bet";
 	import { GetUserOutcome } from "../logic/getters";
+	import { goto } from "$app/navigation";
 
 	export let bet: Bet;
 	export let userId: number;
@@ -10,6 +11,10 @@
 	onMount(async () => {
 		usersOutcome = await GetUserOutcome(bet.id, userId);
 	});
+
+	function HandleClick() {
+		goto("/bet/" + bet.id);
+	}
 </script>
 
 <div class="root">
@@ -28,6 +33,9 @@
 		<div class="betCard__outcome">
 			<div class="betCard__outcome__title">Ваше предсказание: {usersOutcome}</div>
 		</div>
+		<div class="redirect">
+			<button class="redirect__button" on:click={HandleClick}> Перейти </button>
+		</div>
 	</div>
 </div>
 
@@ -45,6 +53,7 @@
 	.betCard {
 		width: 100%;
 		max-width: 500px;
+		height: max-content;
 		background-color: var(--betme-yellow);
 		border-radius: 10px;
 		display: flex;
@@ -96,5 +105,24 @@
 		font-size: 18px;
 		font-weight: 400;
 		color: var(--betme-gray);
+	}
+
+	.redirect {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.redirect__button {
+		width: 100%;
+		max-width: 200px;
+		height: 50px;
+		background-color: var(--betme-black);
+		border-radius: 10px;
+		font-family: "Montserrat", sans-serif;
+		font-size: 18px;
+		font-weight: 400;
+		color: var(--betme-yellow);
 	}
 </style>
