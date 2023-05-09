@@ -7,16 +7,19 @@
 	import { GetBetById, GetUserById } from "../../../logic/getters";
 	import type { UserBet } from "../../../models/UserBet";
 	import { get } from "svelte/store";
+	import { BetStatus } from "../../../models/BetStatus";
+	import { StartBet } from "../../../logic/betCreation";
+	import { UserDto } from "../../../models/UserDto";
 
 	const betId: number = Number($page.params.slug);
 	console.log(betId);
 	let bet: Bet;
 	let outcomeUsers: Map<number, Array<UserBet>> = new Map<number, Array<UserBet>>();
 	let users: User[] = [];
+	let currentUser: UserDto | null = null;
 
-	onMount(async () => {
+	async function initBet() {
 		bet = await GetBetById(betId);
-		console.log(bet);
 
 		// create a dict with key = outcomeId, value = list of users
 		// who have chosen this outcome
@@ -26,20 +29,20 @@
 				if (user.outcomeId == outcome.id) {
 					outcomeUsers.get(outcome.id)!.push(user);
 					users.push(await GetUserById(user.userId));
-					console.log(user);
 				}
 			}
 		}
+	}
 
-		console.log(outcomeUsers);
+	onMount(async () => {
+		await initBet();
+		currentUser = await UserDto.ParseFromJWT(localStorage.getItem("token")!);
 	});
 
-	function getUsers(outcomeId: number): User[] {
-		let usersToReturn: User[] = [];
-		for (let user of outcomeUsers.get(outcomeId)!) {
-			usersToReturn.push(users.find((u) => u.id == user.userId)!);
-		}
-		return usersToReturn;
+	async function startBet() {
+		console.log("start bet");
+		await StartBet(betId);
+		await initBet();
 	}
 </script>
 
@@ -65,6 +68,9 @@ then comes description, and then the possible outcomes in column,
 				{/each}
 			</div>
 		</div>
+		{#if bet.status == BetStatus.Creating && currentUser != null && bet.creatorId == currentUser.id}
+			<button class="start__bet" on:click={() => {}}>Start bet</button>
+		{/if}
 	{:catch error}
 		<div class="error">{error.message}</div>
 	{/await}
@@ -75,6 +81,7 @@ then comes description, and then the possible outcomes in column,
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		flex-direction: column;
 	}
 
 	.betCard {
@@ -138,5 +145,19 @@ then comes description, and then the possible outcomes in column,
 		font-size: 14px;
 		text-align: center;
 		color: var(--betme-black);
+	}
+
+	.start__bet {
+		width: 100%;
+		max-width: 200px;
+		height: 50px;
+		background-color: var(--betme-black);
+		color: var(--betme-yellow);
+		border-radius: 10px;
+		border: none;
+		font-family: "Montserrat", sans-serif;
+		font-size: 16px;
+		font-weight: bold;
+		margin-top: 5px;
 	}
 </style>
