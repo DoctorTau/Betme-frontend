@@ -75,7 +75,14 @@ then comes description, and then the possible outcomes in column,
 				{#each bet.outcomes as outcome}
 					<div class="outcome__row">
 						<div class="outcome">
-							<div class="outcome__title">{outcome.name}</div>
+							<div class="row">
+								<div class="outcome__title">{outcome.name}</div>
+								{#if outcome.id == bet.winOutcomeId}
+									<div class="winner__icon">
+										<img src="../winner-icon.png" alt="winner" />
+									</div>
+								{/if}	
+							</div>
 							<div class="outcome__users">
 								{#each outcome.users as user}
 									<div class="outcome__users__user">{user.name}</div>
@@ -95,7 +102,7 @@ then comes description, and then the possible outcomes in column,
 			</div>
 
 			<!--separator  -->
-			<hr />
+			<hr class="separator" />
 
 			{#if bet.status == BetStatus.Closed}
 				<div class="winner__section">
@@ -207,6 +214,18 @@ then comes description, and then the possible outcomes in column,
 		color: var(--betme-black);
 	}
 
+	.row {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.row img{
+		width: 20px;
+		height: 20px;
+	}
+
 	.outcomes {
 		display: flex;
 		flex-direction: column;
@@ -298,7 +317,7 @@ then comes description, and then the possible outcomes in column,
 		align-items: center;
 	}
 
-	.outcome__title__centered{
+	.outcome__title__centered {
 		font-family: "Montserrat", sans-serif;
 		font-size: 16px;
 		font-weight: bold;

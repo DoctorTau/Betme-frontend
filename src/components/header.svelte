@@ -3,6 +3,7 @@
 	import { logout } from "../logic/login";
 	import { UserDto } from "../models/UserDto";
 	import { tokenStore } from "../store";
+	import { goto } from "$app/navigation";
 
 	$: user = new UserDto(0, "", false);
 	onMount(async () => {
@@ -28,6 +29,7 @@
 			class="profile-button"
 			on:click={() => {
 				logout();
+				goto("/");
 			}}>Выход</button
 		>
 	{/if}

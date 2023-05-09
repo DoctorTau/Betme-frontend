@@ -68,7 +68,7 @@
 				{#if i != 0}
 					<button class="outcome__deletion__button" on:click={() => visibleOutcomes--}> x </button>
 				{:else}
-					<div class="outcome__deletion__button" />
+					<!-- <div class="outcome__deletion__button" /> -->
 				{/if}
 			</div>
 		{/each}
@@ -110,6 +110,13 @@
 		width: 20rem;
 		height: 2rem;
 		margin: 0.5rem;
+
+		font-family: "Montserrat", sans-serif;
+
+		background-color: var(--betme-black);
+		color: var(--betme-yellow);
+		border-width: 0;
+		border-radius: 5px;
 	}
 
 	.loginform__button {
@@ -129,19 +136,37 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		justify-content: center;
+		justify-content: flex-start;
 		height: 100%;
+		width: 100%;
 	}
 
 	.outcome__input__field {
 		width: 18rem;
 		height: 2rem;
 		margin: 0.5rem;
+		margin-right: 0px;
+
+		display: flex;
+		align-self: flex-start;
+
+		font-family: "Montserrat", sans-serif;
+		background-color: var(--betme-black);
+		color: var(--betme-yellow);
+		border-width: 0;
+		border-radius: 5px;
 	}
 
 	.outcome__deletion__button {
 		width: 2rem;
 		height: 2rem;
+		margin-right: 0.25rem;
+        margin-left: 0.25rem;
+
+		background-color: var(--betme-black);
+		color: var(--betme-yellow);
+		border-radius: 10px;
+		border: none;
 	}
 
 	.loginform__error {

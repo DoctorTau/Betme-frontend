@@ -22,17 +22,21 @@
 		<div class="betCard__header">
 			<div class="betCard__header__title">{bet.name}</div>
 		</div>
+
+		<span />
+
 		<div class="betCard__body">
 			<div class="betCard__body__description">{bet.description}</div>
 		</div>
 
-		<div class="betCard__footer">
-			<div class="betCard__footer__date">До: {new Date(bet.closedAt).toLocaleString()}</div>
-		</div>
+		<span />
 
 		<div class="betCard__outcome">
 			<div class="betCard__outcome__title">Ваше предсказание: {usersOutcome}</div>
 		</div>
+
+		<span />
+
 		<div class="redirect">
 			<button class="redirect__button" on:click={HandleClick}> Перейти </button>
 		</div>
@@ -52,7 +56,7 @@
 
 	.betCard {
 		width: 100%;
-		max-width: 500px;
+		max-width: 250px;
 		height: max-content;
 		background-color: var(--betme-yellow);
 		border-radius: 10px;
@@ -62,6 +66,10 @@
 
 		border-width: 5px;
 		border-color: var(--betme-black);
+	}
+
+	.betCard span {
+		height: 10px;
 	}
 
 	.betCard__header {
@@ -93,13 +101,6 @@
 		color: var(--betme-black);
 	}
 
-	.betCard__footer__date {
-		font-family: "Montserrat", sans-serif;
-		font-size: 18px;
-		font-weight: 400;
-		color: var(--betme-gray);
-	}
-
 	.betCard__outcome__title {
 		font-family: "Montserrat", sans-serif;
 		font-size: 18px;
@@ -124,5 +125,7 @@
 		font-size: 18px;
 		font-weight: 400;
 		color: var(--betme-yellow);
+
+		border-width: 0px;
 	}
 </style>

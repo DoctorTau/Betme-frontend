@@ -52,7 +52,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		align-items: flex-start;
-		justify-content: flex-start;
+		justify-content: center;
 		padding-left: 5%;
 	}
 
