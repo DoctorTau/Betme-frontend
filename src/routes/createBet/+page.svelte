@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
 	import { CreateBetWithOutcomes } from "../../logic/betCreation";
 	import { DateInput } from "date-picker-svelte";
 
@@ -34,8 +35,10 @@
 	let handleCreateBet = async () => {
 		try {
 			if (!checkInput()) return;
-			await CreateBetWithOutcomes(betName, betDescription, closedAt, outcomes);
-            errorMessage = "";
+			let bet = await CreateBetWithOutcomes(betName, betDescription, closedAt, outcomes);
+			errorMessage = "";
+			// Go to bet page
+			goto(`/bet/${bet.id}`);
 		} catch (e) {
 			("Неверно заполнены поля");
 			console.log(e);
@@ -53,11 +56,6 @@
 			placeholder="Описание"
 			bind:value={betDescription}
 		/>
-
-		<div class="loginform__date">
-			<label for="DateInput" class="loginform_label"> Дата окончания: </label>
-			<DateInput class="loginform__dateinput" bind:value={closedAt} />
-		</div>
 
 		{#each Array(visibleOutcomes) as _, i}
 			<div class="outcome__input">
@@ -85,11 +83,6 @@
 </div>
 
 <style>
-	:root {
-		--date-picker-background: var(--betme-black);
-		--date-picker-foreground: var(--betme-yellow);
-	}
-
 	.form {
 		display: flex;
 		flex-direction: column;
@@ -149,18 +142,6 @@
 	.outcome__deletion__button {
 		width: 2rem;
 		height: 2rem;
-	}
-
-	.loginform__date {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.loginform_label {
-		margin: 0.5rem;
-		font-family: "Montserrat", sans-serif;
 	}
 
 	.loginform__error {

@@ -6,11 +6,13 @@
 	import { GetBetById, GetUserById } from "../../../logic/getters";
 	import type { UserBet } from "../../../models/UserBet";
 	import { BetStatus } from "../../../models/BetStatus";
-	import { JoinBet, StartBet } from "../../../logic/betCreation";
+	import { StartBet } from "../../../logic/betCreation";
 	import { UserDto } from "../../../models/UserDto";
+	import { JoinBet, JoinBetWithNewOutcome } from "../../../logic/betJoin";
+	import AddOutcomeAndJoin from "../../../components/addOutcomeAndJoin.svelte";
+	import { CheckIfThisUserVote, Vote } from "../../../logic/betVote";
 
 	const betId: number = Number($page.params.slug);
-	console.log(betId);
 	let bet: Bet;
 	let outcomeUsers: Map<number, Array<UserBet>> = new Map<number, Array<UserBet>>();
 	let users: User[] = [];
@@ -19,8 +21,11 @@
 	let isParticipant: boolean = false;
 	let selectedOutcomeId: number = -1;
 
-	$: canJoin = !isParticipant && currentUser != null && bet.status == BetStatus.Creating;
+	let showVote: boolean = false;
 
+	$: newOutcomeField = false;
+	$: canJoin = !isParticipant && currentUser != null && bet.status == BetStatus.Creating;
+	$: errorMessage = "";
 	async function initBet() {
 		bet = await GetBetById(betId);
 
@@ -49,7 +54,10 @@
 			}
 		}
 
-		console.log(currentUser);
+		showVote =
+			!(await CheckIfThisUserVote(betId, currentUser?.id!)) &&
+			(bet.status == BetStatus.Open || bet.status == BetStatus.Voting) &&
+			isParticipant;
 	});
 </script>
 
@@ -57,11 +65,12 @@
 then comes description, and then the possible outcomes in column,
  under each outcome should be the list of users, who have chousen it. 
  -->
-<div class="root">
-	{#await GetBetById(betId) then bet}
+{#await GetBetById(betId) then bet}
+	<div class="root">
 		<div class="betCard">
 			<div class="title">{bet.name}</div>
 			<div class="description">{bet.description}</div>
+			<!-- <div class="till__date"><b>До</b> {new Date(bet.closedAt).toLocaleString()}</div> -->
 			<div class="outcomes">
 				{#each bet.outcomes as outcome}
 					<div class="outcome__row">
@@ -73,7 +82,7 @@ then comes description, and then the possible outcomes in column,
 								{/each}
 							</div>
 						</div>
-						{#if canJoin}
+						{#if canJoin || showVote}
 							<input
 								type="radio"
 								name="outcome"
@@ -90,21 +99,51 @@ then comes description, and then the possible outcomes in column,
 				class="button__bet"
 				on:click={() => {
 					StartBet(betId);
+					location.reload();
 				}}>Начать пари</button
 			>
 		{:else if canJoin}
+			<div class="button__stack">
+				<button
+					class="button__bet"
+					on:click={async () => {
+						await JoinBet(betId, currentUser == null ? -1 : currentUser.id, selectedOutcomeId);
+						location.reload();
+					}}>Присоединиться</button
+				>
+				{#if newOutcomeField == false}
+					<button
+						class="button__bet"
+						on:click={() => {
+							newOutcomeField = true;
+						}}>Свой вариант</button
+					>
+				{:else}
+					<div class="add__outcome__menu">
+						<AddOutcomeAndJoin {betId} userId={currentUser == null ? 0 : currentUser.id} />
+					</div>
+				{/if}
+			</div>
+		{:else if showVote}
 			<button
 				class="button__bet"
 				on:click={async () => {
-					await JoinBet(betId, currentUser == null ? -1 : currentUser.id, selectedOutcomeId);
-					location.reload();
-				}}>Присоединиться</button
+					if (selectedOutcomeId != -1) {
+						await Vote(betId, currentUser == null ? -1 : currentUser.id, selectedOutcomeId);
+						location.reload();
+					} else {
+						errorMessage = "Выберите исход";
+					}
+				}}>Проголосовать</button
 			>
 		{/if}
-	{:catch error}
-		<div class="error">{error.message}</div>
-	{/await}
-</div>
+		{#if errorMessage != ""}
+			<div class="error">{errorMessage}</div>
+		{/if}
+	</div>
+{:catch error}
+	<div class="error">{error.message}</div>
+{/await}
 
 <style>
 	.root {
@@ -161,6 +200,9 @@ then comes description, and then the possible outcomes in column,
 		width: 20px;
 		height: 20px;
 		margin-top: 10%;
+
+		background-color: var(--betme-yellow);
+		color: var(--betme-black);
 	}
 
 	.outcome {
@@ -203,5 +245,24 @@ then comes description, and then the possible outcomes in column,
 		font-weight: bold;
 		margin-top: 5px;
 		cursor: pointer;
+	}
+
+	.button__stack {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.add__outcome__menu {
+		width: 100%;
+		height: 100%;
+	}
+
+	.error {
+		font-family: "Montserrat", sans-serif;
+		font-size: 16px;
+		text-align: center;
+		color: var(--betme-red);
 	}
 </style>
