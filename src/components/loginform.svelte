@@ -51,13 +51,13 @@
 		{/if}
 
 		<div class="toggler">
-			<label> Вход </label>
+			Вход
 			<ToggleSwitch
 				func={() => {
 					regForm = !regForm;
 				}}
 			/>
-			<label> Регистрация </label>
+			Регистрация
 		</div>
 	</div>
 </div>
@@ -113,12 +113,10 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-	}
-
-	.toggler label {
-		font-size: 20px;
-		font-weight: bold;
+		margin-top: 20px;
 		font-family: "Monserat", sans-serif;
-		margin: 0 10px;
+		font-weight: bold;
+		color: var(--betme-black);
+		gap: 10px;
 	}
 </style>

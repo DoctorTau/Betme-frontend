@@ -21,10 +21,6 @@
 			<div class="betCard__body__description">{bet.description}</div>
 		</div>
 
-		<hr
-			style="width: 100%; height: 1px; background-color: var(--betme-black); border: none; margin: 10px 0px;"
-		/>
-
 		<div class="betCard__footer">
 			<div class="betCard__footer__date">До: {new Date(bet.closedAt).toLocaleString()}</div>
 		</div>
@@ -92,13 +88,13 @@
 		font-family: "Montserrat", sans-serif;
 		font-size: 18px;
 		font-weight: 400;
-		color: var(--betme-black);
+		color: var(--betme-gray);
 	}
 
 	.betCard__outcome__title {
 		font-family: "Montserrat", sans-serif;
 		font-size: 18px;
 		font-weight: 400;
-		color: var(--betme-black);
+		color: var(--betme-gray);
 	}
 </style>
