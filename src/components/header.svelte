@@ -15,10 +15,14 @@
 			localStorage.getItem("token") ? "" : localStorage.getItem("token")!
 		);
 	});
+
+	function GoToMainPage() {
+		window.location.href = "/";
+	}
 </script>
 
 <div class="topbar">
-	<h1>Bet Me</h1>
+	<h1 on:click={GoToMainPage} on:keydown={GoToMainPage}>Bet Me</h1>
 	{#if user.loggedIn}
 		<button
 			class="profile-button"
@@ -51,11 +55,12 @@
 		cursor: pointer;
 	}
 
-	h1 {
+	.topbar h1 {
 		color: white;
 		font-size: 30px;
 		font-weight: bold;
 		font-family: "Monserat", sans-serif;
 		display: flex;
+		cursor: pointer;
 	}
 </style>
