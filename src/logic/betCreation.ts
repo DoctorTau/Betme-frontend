@@ -1,5 +1,6 @@
 import type { Bet } from "../models/Bet";
 import type { Outcome } from "../models/Outcome";
+import type { UserBet } from "../models/UserBet";
 import { GetAllBetsOutcomes } from "./getters";
 
 function TrimQuotes(str: string): string {
@@ -8,7 +9,7 @@ function TrimQuotes(str: string): string {
 
 export async function StartBet(betId: number) {
 	const response = await fetch(`http://localhost:5091/api/Bet/${betId}/start`, {
-		method: "POST",
+		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: "Bearer " + TrimQuotes(localStorage.getItem("token")!),
@@ -71,4 +72,23 @@ export async function CreateBetWithOutcomes(
 	// Add outcomes to bet
 	bet.outcomes = await GetAllBetsOutcomes(bet.id);
 	return bet;
+}
+
+export async function JoinBet(betId: number, userId: number, outcomeId: number) {
+	if (betId < 1 || userId < 1 || outcomeId < 1) {
+		throw new Error("Неверные параметры");
+	}
+	const response = await fetch(`http://localhost:5091/api/Bet/${betId}/join`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: "Bearer " + TrimQuotes(localStorage.getItem("token")!),
+			"Access-Control-Allow-Origin": "*"
+		},
+		body: JSON.stringify({ betId, userId, outcomeId })
+	});
+
+	if (!response.ok) {
+		throw new Error("Ошибка при присоединении к пари");
+	}
 }
