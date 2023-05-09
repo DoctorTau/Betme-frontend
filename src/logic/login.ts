@@ -13,7 +13,7 @@ export const login = async (email: string, password: string) => {
 			tokenStore.set(text);
 		});
 	} else {
-		throw new Error("Invalid credentials");
+		throw new Error("Ошибка при вводе email или пароля");
 	}
 };
 
@@ -25,7 +25,7 @@ export const register = async (username: string, email: string, password: string
 	});
 
 	if (!response.ok) {
-		throw new Error("Invalid credentials");
+		throw new Error("Ошибка при регистрации");
 	}
 };
 

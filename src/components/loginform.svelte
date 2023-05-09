@@ -8,10 +8,19 @@
 	let email = "";
 	let password = "";
 
+	let hasError: boolean = false;
+	let errorMessage: string = "";
+
+	function setError(message: string) {
+		hasError = true;
+		errorMessage = message;
+	}
+
 	let handleLogin = async () => {
 		try {
 			await login(email, password);
 		} catch (e) {
+			setError("Неверный email или пароль");
 			console.log(e);
 		}
 	};
@@ -20,6 +29,7 @@
 		try {
 			await register(name, email, password);
 		} catch (e) {
+			setError("Неверный email или пароль или пользователь с таким email уже существует");
 			console.log(e);
 		}
 	};
@@ -48,6 +58,10 @@
 				bind:value={password}
 			/>
 			<button class="loginform__button" on:click={handleLogin}> Login </button>
+		{/if}
+
+		{#if hasError}
+			<p style="color: red;">{errorMessage}</p>
 		{/if}
 
 		<div class="toggler">
@@ -118,5 +132,10 @@
 		font-weight: bold;
 		color: var(--betme-black);
 		gap: 10px;
+	}
+
+	.loginform > p {
+		color: red;
+		font-family: "Monserat", sans-serif;
 	}
 </style>
