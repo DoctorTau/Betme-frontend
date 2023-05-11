@@ -56,7 +56,7 @@
 
 		showVote =
 			!(await CheckIfThisUserVote(betId, currentUser?.id!)) &&
-			(bet.status == BetStatus.Open || bet.status == BetStatus.Voting) &&
+			bet.status == BetStatus.Open &&
 			isParticipant;
 	});
 </script>
@@ -81,7 +81,7 @@ then comes description, and then the possible outcomes in column,
 									<div class="winner__icon">
 										<img src="../winner-icon.png" alt="winner" />
 									</div>
-								{/if}	
+								{/if}
 							</div>
 							<div class="outcome__users">
 								{#each outcome.users as user}
@@ -221,7 +221,7 @@ then comes description, and then the possible outcomes in column,
 		align-items: center;
 	}
 
-	.row img{
+	.row img {
 		width: 20px;
 		height: 20px;
 	}

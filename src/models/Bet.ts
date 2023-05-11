@@ -9,7 +9,6 @@ export interface Bet {
 	description: string;
 	creatorId: number;
 	createdAt: Date;
-	closedAt: Date;
 	status: BetStatus;
 	winOutcomeId: number;
 
