@@ -11,6 +11,9 @@
 	import { JoinBet, JoinBetWithNewOutcome } from "../../../logic/betJoin";
 	import AddOutcomeAndJoin from "../../../components/addOutcomeAndJoin.svelte";
 	import { CheckIfThisUserVote, Vote } from "../../../logic/betVote";
+	import Error from "./+error.svelte";
+	import { error } from "@sveltejs/kit";
+	import { text } from "svelte/internal";
 
 	const betId: number = Number($page.params.slug);
 	let bet: Bet;
@@ -63,40 +66,40 @@
 
 <!-- On the page center should be the name of the bet
 then comes description, and then the possible outcomes in column,
- under each outcome should be the list of users, who have chousen it. 
- -->
+ under each outcome should be the list of users, who have cousen it.  -->
 {#await GetBetById(betId) then bet}
 	<div class="root">
 		<div class="betCard">
 			<div class="title">{bet.name}</div>
 			<div class="description">{bet.description}</div>
-			<!-- <div class="till__date"><b>До</b> {new Date(bet.closedAt).toLocaleString()}</div> -->
 			<div class="outcomes">
 				{#each bet.outcomes as outcome}
-					<div class="outcome__row">
-						<div class="outcome">
-							<div class="row">
-								<div class="outcome__title">{outcome.name}</div>
-								{#if outcome.id == bet.winOutcomeId}
-									<div class="winner__icon">
-										<img src="../winner-icon.png" alt="winner" />
-									</div>
-								{/if}
+					<div class="row">
+						<div class="outcome__row">
+							<div class="outcome">
+								<div class="row">
+									<div class="outcome__title">{outcome.name}</div>
+									{#if outcome.id == bet.winOutcomeId}
+										<div class="winner__icon">
+											<img src="../winner-icon.png" alt="winner" />
+										</div>
+									{/if}
+								</div>
+								<div class="outcome__users">
+									{#each outcome.users as user}
+										<div class="outcome__users__user">{user.name}</div>
+									{/each}
+								</div>
 							</div>
-							<div class="outcome__users">
-								{#each outcome.users as user}
-									<div class="outcome__users__user">{user.name}</div>
-								{/each}
-							</div>
+							{#if canJoin || showVote}
+								<input
+									type="radio"
+									name="outcome"
+									bind:group={selectedOutcomeId}
+									value={outcome.id}
+								/>
+							{/if}
 						</div>
-						{#if canJoin || showVote}
-							<input
-								type="radio"
-								name="outcome"
-								bind:group={selectedOutcomeId}
-								value={outcome.id}
-							/>
-						{/if}
 					</div>
 				{/each}
 			</div>
@@ -130,8 +133,12 @@ then comes description, and then the possible outcomes in column,
 			<button
 				class="button__bet"
 				on:click={async () => {
-					await StartBet(betId);
-					location.reload();
+					try {
+						await StartBet(betId);
+						location.reload();
+					} catch (error) {
+						if (error instanceof Error) errorMessage = error.message;
+					}
 				}}>Начать пари</button
 			>
 		{:else if canJoin}
@@ -215,10 +222,11 @@ then comes description, and then the possible outcomes in column,
 	}
 
 	.row {
+		width: 100%;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		align-items: center;
+		/* align-items: sp; */
 	}
 
 	.row img {
@@ -234,16 +242,17 @@ then comes description, and then the possible outcomes in column,
 	}
 
 	.outcome__row {
+		width: 100%;
+		height: 10%;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		align-items: center;
 	}
 
 	.outcome__row input {
 		width: 20px;
 		height: 20px;
-		margin-top: 10%;
+		justify-content: space-between;
 
 		background-color: var(--betme-yellow);
 		color: var(--betme-black);

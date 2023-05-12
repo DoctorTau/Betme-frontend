@@ -48,7 +48,7 @@
 
 <div class="form">
 	<div class="loginform">
-		<h1 class="loginform__title">Create Bet</h1>
+		<h1 class="loginform__title">Создать пари</h1>
 		<input class="loginform__input" type="text" placeholder="Наименование" bind:value={betName} />
 		<input
 			class="loginform__input"
@@ -62,7 +62,7 @@
 				<input
 					class="outcome__input__field"
 					type="text"
-					placeholder="Outcome"
+					placeholder="Исход"
 					bind:value={outcomes[i]}
 				/>
 				{#if i != 0}

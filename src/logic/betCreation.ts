@@ -16,6 +16,9 @@ export async function StartBet(betId: number) {
 			"Access-Control-Allow-Origin": "*"
 		}
 	});
+	if(response.status === 400){
+		throw new Error("Вы не можете начать пари с одним учатником")
+	}
 	if (!response.ok) {
 		throw new Error("Ошибка при старте пари");
 	}
