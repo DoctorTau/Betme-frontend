@@ -20,3 +20,20 @@ const createWritableStore = (key: string, startValue: string) => {
 };
 
 export const tokenStore = createWritableStore("token", "");
+export let prevPage = writable("");
+
+export function getJwt() {
+	const token = localStorage.getItem("token");
+	if (token === null) {
+		return "";
+	}
+	return token;
+}
+
+export function getPrevPage() {
+	const prevPage = localStorage.getItem("prevPage");
+	if (prevPage === null) {
+		return "";
+	}
+	return prevPage;
+}

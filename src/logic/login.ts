@@ -1,4 +1,16 @@
-import { tokenStore } from "../store";
+import { goto } from "$app/navigation";
+import { getJwt, getPrevPage, prevPage, tokenStore } from "../store";
+
+export const LoginRedirection = () => {
+	prevPage.set(window.location.href);
+	console.log(window.location.href);
+	const token = getJwt();
+
+	if (token.length <= 2 && !window.location.href.includes("/login")) {
+		console.log("Redirecting to login page");
+		goto("/login");
+	}
+};
 
 export const login = async (email: string, password: string) => {
 	const response = await fetch("http://localhost:5091/api/Auth/login", {
@@ -12,6 +24,11 @@ export const login = async (email: string, password: string) => {
 		response.text().then((text) => {
 			tokenStore.set(text);
 		});
+		try {
+			goto(getPrevPage().replace("http://localhost:5173", ""));
+		} catch (error) {
+			console.log(error);
+		}
 	} else {
 		throw new Error("Ошибка при вводе email или пароля");
 	}

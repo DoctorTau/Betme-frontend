@@ -38,26 +38,21 @@
 <div class="form">
 	<div class="loginform">
 		{#if regForm}
-			<h1 class="loginform__title">Register</h1>
-			<input class="loginform__input" type="text" placeholder="Name" bind:value={name} />
-			<input class="loginform__input" type="email" placeholder="Email" bind:value={email} />
+			<h1 class="loginform__title">Регистрация</h1>
 			<input
 				class="loginform__input"
-				type="password"
-				placeholder="Password"
-				bind:value={password}
+				type="text"
+				placeholder="Имя пользователя"
+				bind:value={name}
 			/>
-			<button class="loginform__button" on:click={handleRegister}> Register </button>
+			<input class="loginform__input" type="email" placeholder="Email" bind:value={email} />
+			<input class="loginform__input" type="password" placeholder="Пароль" bind:value={password} />
+			<button class="loginform__button" on:click={handleRegister}>Зарегестрироваться</button>
 		{:else}
-			<h1 class="loginform__title">Login</h1>
+			<h1 class="loginform__title">Вход</h1>
 			<input class="loginform__input" type="email" placeholder="Email" bind:value={email} />
-			<input
-				class="loginform__input"
-				type="password"
-				placeholder="Password"
-				bind:value={password}
-			/>
-			<button class="loginform__button" on:click={handleLogin}> Login </button>
+			<input class="loginform__input" type="password" placeholder="Пароль" bind:value={password} />
+			<button class="loginform__button" on:click={handleLogin}>Войти</button>
 		{/if}
 
 		{#if hasError}
@@ -103,6 +98,7 @@
 		font-weight: bold;
 		font-family: "Monserat", sans-serif;
 		margin-bottom: 20px;
+		color: var(--betme-black);
 	}
 
 	.loginform__input {
@@ -117,8 +113,8 @@
 		border-radius: 4px;
 		border: none;
 		margin-bottom: 10px;
-		background-color: white;
-		color: var(--betme-black);
+		background-color: var(--betme-black);
+		color: var(--betme-yellow);
 		font-weight: bold;
 		cursor: pointer;
 	}

@@ -129,8 +129,8 @@ then comes description, and then the possible outcomes in column,
 		{#if bet.status == BetStatus.Creating && currentUser != null && isParticipant && bet.creatorId == currentUser.id}
 			<button
 				class="button__bet"
-				on:click={() => {
-					StartBet(betId);
+				on:click={async () => {
+					await StartBet(betId);
 					location.reload();
 				}}>Начать пари</button
 			>

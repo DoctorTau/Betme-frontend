@@ -52,6 +52,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		margin: 0 10px 0 10px;
 	}
 
 	.betCard {
