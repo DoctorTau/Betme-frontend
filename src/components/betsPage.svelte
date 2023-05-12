@@ -52,7 +52,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		align-items: flex-start;
-		justify-content: center;
+		justify-content: flex-start;
 		padding-left: 5%;
 	}
 
@@ -61,5 +61,16 @@
 		font-weight: 700;
 		margin-bottom: 20px;
 		font-family: "Montserrat", sans-serif;
+	}
+
+	/* for mobile */
+	@media (max-width: 768px) {
+		.bets {
+			padding-left: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
 	}
 </style>
