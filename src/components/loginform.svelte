@@ -2,23 +2,29 @@
 	import { login, register } from "../logic/login";
 	import ToggleSwitch from "./toggleSwitch.svelte";
 
+	export let showLogin;
+
 	let regForm = false;
 
 	let name = "";
 	let email = "";
 	let password = "";
 
-	let hasError: boolean = false;
-	let errorMessage: string = "";
+	$: errorMessage = "";
+	$: successMessage = "";
 
 	function setError(message: string) {
-		hasError = true;
 		errorMessage = message;
+	}
+
+	function setSuccess(message: string) {
+		successMessage = message;
 	}
 
 	let handleLogin = async () => {
 		try {
 			await login(email, password);
+			showLogin = false;
 		} catch (e) {
 			setError("Неверный email или пароль");
 			console.log(e);
@@ -28,6 +34,8 @@
 	let handleRegister = async () => {
 		try {
 			await register(name, email, password);
+			successMessage = "Вы успешно зарегестрировались";
+			regForm = !regForm;
 		} catch (e) {
 			setError("Неверный email или пароль или пользователь с таким email уже существует");
 			console.log(e);
@@ -55,8 +63,12 @@
 			<button class="loginform__button" on:click={handleLogin}>Войти</button>
 		{/if}
 
-		{#if hasError}
-			<p style="color: red;">{errorMessage}</p>
+		{#if errorMessage || successMessage}
+			{#if successMessage}
+				<p style="color: green;">{successMessage}</p>
+			{:else}
+				<p style="color: red;">{errorMessage}</p>
+			{/if}
 		{/if}
 
 		<div class="toggler">

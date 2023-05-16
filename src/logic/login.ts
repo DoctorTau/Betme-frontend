@@ -1,9 +1,14 @@
 import { goto } from "$app/navigation";
 import { getJwt, getPrevPage, prevPage, tokenStore } from "../store";
 
+const SavePrevPage = () => {
+	if (!window.location.href.includes("/login")) {
+		prevPage.set(window.location.href);
+	}
+};
+
 export const LoginRedirection = () => {
-	prevPage.set(window.location.href);
-	console.log(window.location.href);
+	SavePrevPage();
 	const token = getJwt();
 
 	if (token.length <= 2 && !window.location.href.includes("/login")) {
@@ -25,7 +30,7 @@ export const login = async (email: string, password: string) => {
 			tokenStore.set(text);
 		});
 		try {
-			// goto(getPrevPage().replace("http://localhost:5173", ""));
+			goto(getPrevPage());
 		} catch (error) {
 			console.log(error);
 		}
@@ -47,7 +52,6 @@ export const register = async (name: string, email: string, password: string) =>
 		console.log(response.body);
 		throw new Error("Ошибка при регистрации");
 	}
-	console.log("reg success!");
 };
 
 export const logout = async () => {

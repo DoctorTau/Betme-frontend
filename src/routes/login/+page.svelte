@@ -3,7 +3,7 @@
 	import Loginform from "../../components/loginform.svelte";
 	import { UserDto } from "../../models/UserDto";
 
-	let showLogin = true;
+	$: showLogin = true;
 	let user: UserDto;
 	onMount(async () => {
 		const token = localStorage.getItem("token");
@@ -17,7 +17,7 @@
 
 <div class="root">
 	{#if showLogin}
-		<Loginform />
+		<Loginform {showLogin} />
 	{:else if user == null}
 		<h1>Something went wrong</h1>
 	{:else}
