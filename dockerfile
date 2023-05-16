@@ -1,20 +1,20 @@
-# Use an official Node.js runtime as a parent image
-FROM node:20-alpine
+FROM node:lts-slim as build
 
-# Set the working directory to /app
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
-
-# Install any needed packages specified in package.json
+COPY package*.json ./
+RUN rm -rf node_modules
+RUN rm -rf build
+COPY . .
 RUN npm install
-
-# Build the app
 RUN npm run build
 
-# Expose the port the app runs on
-EXPOSE 4173
+FROM node:lts-slim as run
 
-# Start the app
-CMD ["npm", "run", "preview"]
+WORKDIR /app
+COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/build ./build
+RUN npm install --production
+
+EXPOSE 8080
+ENTRYPOINT [ "npm", "run", "start" ]
