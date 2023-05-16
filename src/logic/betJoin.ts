@@ -4,7 +4,7 @@ export async function JoinBet(betId: number, userId: number, outcomeId: number) 
 	if (betId < 1 || userId < 1 || outcomeId < 1) {
 		throw new Error("Неверные параметры");
 	}
-	const response = await fetch(`http://localhost:5091/api/Bet/${betId}/join`, {
+	const response = await fetch(`http://betme.pro/fetch/api/Bet/${betId}/join`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

@@ -13,7 +13,7 @@ export const LoginRedirection = () => {
 };
 
 export const login = async (email: string, password: string) => {
-	const response = await fetch("http://localhost:5091/api/Auth/login", {
+	const response = await fetch("http://betme.pro/fetch/api/Auth/login", {
 		method: "POST",
 		body: JSON.stringify({ email, password }),
 		headers: { "Content-Type": "application/json" }
@@ -25,7 +25,7 @@ export const login = async (email: string, password: string) => {
 			tokenStore.set(text);
 		});
 		try {
-			goto(getPrevPage().replace("http://localhost:5173", ""));
+			// goto(getPrevPage().replace("http://localhost:5173", ""));
 		} catch (error) {
 			console.log(error);
 		}
@@ -35,16 +35,19 @@ export const login = async (email: string, password: string) => {
 };
 
 export const register = async (name: string, email: string, password: string) => {
-	const response = await fetch("http://localhost:5091/api/Auth/register", {
+	const response = await fetch("http://betme.pro/fetch/api/Auth/register", {
 		method: "POST",
 		body: JSON.stringify({ name, email, password }),
 		headers: { "Content-Type": "application/json" }
 	});
 
+	console.log("start reg");
+
 	if (!response.ok) {
 		console.log(response.body);
 		throw new Error("Ошибка при регистрации");
 	}
+	console.log("reg success!");
 };
 
 export const logout = async () => {

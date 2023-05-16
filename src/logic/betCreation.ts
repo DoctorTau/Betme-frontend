@@ -8,7 +8,7 @@ export function TrimQuotes(str: string): string {
 }
 
 export async function StartBet(betId: number) {
-	const response = await fetch(`http://localhost:5091/api/Bet/${betId}/start`, {
+	const response = await fetch(`http://betme.pro/fetch/api/Bet/${betId}/start`, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
@@ -25,7 +25,7 @@ export async function StartBet(betId: number) {
 }
 
 export async function CreateBet(name: string, description: string, closedAt: Date): Promise<Bet> {
-	const response = await fetch("http://localhost:5091/api/Bet", {
+	const response = await fetch("http://betme.pro/fetch/api/Bet", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -44,7 +44,7 @@ export async function CreateBet(name: string, description: string, closedAt: Dat
 }
 
 export async function CreateOutcome(name: string, betId: number): Promise<Outcome> {
-	const response = await fetch(`http://localhost:5091/api/Bet/outcome`, {
+	const response = await fetch(`http://betme.pro/fetch/api/Bet/outcome`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

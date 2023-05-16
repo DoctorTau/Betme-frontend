@@ -23,7 +23,7 @@
 </script>
 
 <div class="topbar">
-	<h1 on:click={GoToMainPage} on:keydown={GoToMainPage}>Bet Me</h1>
+	<h1 on:click={GoToMainPage} on:keydown={GoToMainPage}>Bet Me | BETA</h1>
 	{#if user.loggedIn}
 		<button
 			class="profile-button"
