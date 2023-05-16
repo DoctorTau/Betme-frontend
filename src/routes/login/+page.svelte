@@ -1,9 +1,28 @@
-<script>
+<script lang="ts">
+	import { onMount } from "svelte";
 	import Loginform from "../../components/loginform.svelte";
+	import { UserDto } from "../../models/UserDto";
+
+	let showLogin = true;
+	let user: UserDto;
+	onMount(async () => {
+		const token = localStorage.getItem("token");
+
+		if (token != null && token.length > 3) {
+			showLogin = false;
+			user = await UserDto.ParseFromJWT(token);
+		}
+	});
 </script>
 
 <div class="root">
-	<Loginform />
+	{#if showLogin}
+		<Loginform />
+	{:else if user == null}
+		<h1>Something went wrong</h1>
+	{:else}
+		<h1>Вы вошли как {user.username}</h1>
+	{/if}
 </div>
 
 <style>
@@ -12,5 +31,11 @@
 		justify-content: center;
 		align-items: center;
 		height: 100vh;
+	}
+
+	.root h1 {
+		font-size: 3rem;
+		font-family: "Montserrat", sans-serif;
+		color: var(--betme-black);
 	}
 </style>

@@ -109,23 +109,19 @@ then comes description, and then the possible outcomes in column,
 
 			{#if bet.status == BetStatus.Closed}
 				<div class="winner__section">
-					<div class="outcome__row">
-						<div class="outcome">
-							<div class="outcome__title">Победители</div>
-							<div class="winner__section">
-								<div class="outcome__users">
-									{#each bet.outcomes as outcome}
-										{#if outcome.id == bet.winOutcomeId}
-											<div class="outcome__title__centered">{outcome.name}</div>
-											{#each outcome.users as user}
-												<div class="outcome__users__user">{user.name}</div>
-											{/each}
-										{/if}
-									{/each}
-								</div>
+						<div class="outcome__title">Победители</div>
+						<div class="winner__section">
+							<div class="outcome__win">
+								{#each bet.outcomes as outcome}
+									{#if outcome.id == bet.winOutcomeId}
+										<div class="outcome__title__centered">{outcome.name}</div>
+										{#each outcome.users as user}
+											<div class="outcome__users__user">{user.name}</div>
+										{/each}
+									{/if}
+								{/each}
 							</div>
 						</div>
-					</div>
 				</div>
 			{/if}
 		</div>
@@ -237,8 +233,8 @@ then comes description, and then the possible outcomes in column,
 	.outcomes {
 		display: flex;
 		flex-direction: column;
-		justify-content: flex-start;
-		align-items: flex-start;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.outcome__row {
@@ -320,6 +316,7 @@ then comes description, and then the possible outcomes in column,
 	}
 
 	.winner__section {
+		width: auto;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
