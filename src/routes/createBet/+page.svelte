@@ -165,13 +165,13 @@
 		justify-content: flex-start;
 		height: 100%;
 		width: 100%;
+		margin: 0 10px 0 10px;
 	}
 
 	.outcome__input__field {
-		width: 18rem;
+		width: 100%;
 		height: 2rem;
 		margin: 0.5rem;
-		margin-right: 0px;
 
 		display: flex;
 		align-self: flex-start;
