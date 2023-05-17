@@ -34,8 +34,7 @@ export const login = async (email: string, password: string) => {
 			tokenStore.set(text);
 		});
 		try {
-			console.log("Redirecting to prev page: " + getPrevPage());
-			goto("/");
+			goto(getPrevPage());
 		} catch (error) {
 			console.log(error);
 		}
