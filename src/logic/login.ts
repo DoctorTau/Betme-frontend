@@ -12,10 +12,10 @@ const SavePrevPage = () => {
 };
 
 export const LoginRedirection = () => {
-	SavePrevPage();
 	const token = getJwt();
 
 	if (token.length <= 2 && !window.location.href.includes("/login")) {
+		SavePrevPage();
 		console.log("Redirecting to login page");
 		goto("/login");
 	}
