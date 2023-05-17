@@ -17,10 +17,6 @@
 		errorMessage = message;
 	}
 
-	function setSuccess(message: string) {
-		successMessage = message;
-	}
-
 	let handleLogin = async () => {
 		try {
 			await login(email, password);
@@ -74,6 +70,7 @@
 		<div class="toggler">
 			Вход
 			<ToggleSwitch
+				checked={regForm}
 				func={() => {
 					regForm = !regForm;
 				}}

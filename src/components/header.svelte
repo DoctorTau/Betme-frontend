@@ -29,7 +29,6 @@
 			class="profile-button"
 			on:click={() => {
 				logout();
-				goto("/");
 			}}>Выход</button
 		>
 	{/if}

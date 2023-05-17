@@ -2,9 +2,7 @@
 
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { fade } from 'svelte/transition';
 
-	const dispatch = createEventDispatcher();
 
 	export let func: () => void;
 	export let checked: boolean = false;

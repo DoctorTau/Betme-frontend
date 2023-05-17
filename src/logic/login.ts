@@ -60,6 +60,7 @@ export const register = async (name: string, email: string, password: string) =>
 	}
 };
 
-export const logout = async () => {
+export const logout = () => {
 	tokenStore.set("");
+	goto("/login");
 };
