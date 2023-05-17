@@ -2,19 +2,23 @@
 	import { onMount } from "svelte";
 	import { logout } from "../logic/login";
 	import { UserDto } from "../models/UserDto";
-	import { tokenStore } from "../store";
+	import { getJwt, tokenStore } from "../store";
 	import { goto } from "$app/navigation";
+	import { GetUserById } from "../logic/getters";
+	import type { User } from "../models/User";
 
-	$: user = new UserDto(0, "", false);
+	$: userDto = new UserDto(0, "", false);
+	let user: User | null = null;
+
 	onMount(async () => {
 		tokenStore.useLocalStorage();
 		tokenStore.subscribe(async (value) => {
-			user = await UserDto.ParseFromJWT(value);
+			userDto = await UserDto.ParseFromJWT(value);
 		});
 
-		user = await UserDto.ParseFromJWT(
-			localStorage.getItem("token") ? "" : localStorage.getItem("token")!
-		);
+		userDto = await UserDto.ParseFromJWT(getJwt());
+
+		user = await GetUserById(userDto.id);
 	});
 
 	function GoToMainPage() {
@@ -24,7 +28,9 @@
 
 <div class="topbar">
 	<h1 on:click={GoToMainPage} on:keydown={GoToMainPage}>Bet Me | open Alpha</h1>
-	{#if user.loggedIn}
+	{#if userDto.loggedIn && user != null}
+		<h2>{user.name} {user.numberOfWins}</h2>
+
 		<button
 			class="profile-button"
 			on:click={() => {
@@ -66,6 +72,15 @@
 		color: var(--betme-black);
 	}
 
+	.topbar h2 {
+		color: var(--betme-black);
+		font-size: 20px;
+		font-weight: bold;
+		font-family: "Monserat", sans-serif;
+		margin-left: auto;
+		margin-right: 10px;
+	}
+
 	/* for mobile */
 	@media (max-width: 768px) {
 		.topbar h1 {
@@ -76,6 +91,15 @@
 			display: flex;
 			cursor: pointer;
 			color: var(--betme-black);
+		}
+
+		.topbar h2 {
+			color: var(--betme-black);
+			font-size: 15px;
+			font-weight: bold;
+			font-family: "Monserat", sans-serif;
+			margin-left: auto;
+			margin-right: 5px;
 		}
 	}
 </style>
