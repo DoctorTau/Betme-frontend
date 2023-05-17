@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import Loginform from "../components/loginform.svelte";
 	import { UserDto } from "../models/UserDto";
 	import { tokenStore } from "../store";
 	import BetsPage from "../components/betsPage.svelte";
@@ -13,19 +12,15 @@
 
 		tokenStore.useLocalStorage();
 		tokenStore.subscribe(async (value) => {
-			userDto = await UserDto.ParseFromJWT(value);
 			token = value;
 		});
-		// console.log(token);
 
 		userDto = await UserDto.ParseFromJWT(token);
 	});
 </script>
 
 <div class="root">
-	{#if !userDto.loggedIn}
-		<Loginform />
-	{:else}
-		<BetsPage userDto={userDto} />
+	{#if userDto.id != 0}
+		<BetsPage {userDto} />
 	{/if}
 </div>

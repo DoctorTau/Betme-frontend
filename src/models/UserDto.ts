@@ -10,7 +10,7 @@ export class UserDto {
 	}
 
 	public static async ParseFromJWT(token: string): Promise<UserDto> {
-		if (token == "") {
+		if (token === "") {
 			return new UserDto(0, "", false);
 		}
 

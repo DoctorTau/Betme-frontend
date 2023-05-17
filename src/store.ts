@@ -20,7 +20,7 @@ const createWritableStore = (key: string, startValue: string) => {
 };
 
 export const tokenStore = createWritableStore("token", "");
-export let prevPage = writable("");
+export let prevPage = createWritableStore("prevPage", "");
 
 export function getJwt() {
 	const token = localStorage.getItem("token");

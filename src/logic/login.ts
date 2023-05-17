@@ -4,8 +4,10 @@ import { getJwt, getPrevPage, prevPage, tokenStore } from "../store";
 const apiURL = import.meta.env.VITE_API_URL as string;
 
 const SavePrevPage = () => {
+	prevPage.useLocalStorage();
 	if (!window.location.href.includes("/login")) {
-		prevPage.set(window.location.href);
+		prevPage.set(location.pathname);
+		console.log("Saved prev page: " + getPrevPage());
 	}
 };
 
@@ -32,7 +34,8 @@ export const login = async (email: string, password: string) => {
 			tokenStore.set(text);
 		});
 		try {
-			goto(getPrevPage());
+			console.log("Redirecting to prev page: " + getPrevPage());
+			goto("/");
 		} catch (error) {
 			console.log(error);
 		}
