@@ -14,8 +14,6 @@
 	onMount(async () => {
 		user = await GetUserById(userDto.id);
 		bets = await GetAllUsersBets(user.id);
-
-		console.log(bets.length);
 	});
 </script>
 

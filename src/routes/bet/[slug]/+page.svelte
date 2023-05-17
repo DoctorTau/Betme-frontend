@@ -14,6 +14,7 @@
 	import Error from "./+error.svelte";
 	import { error } from "@sveltejs/kit";
 	import { text } from "svelte/internal";
+	import { getJwt } from "../../../store";
 
 	const betId: number = Number($page.params.slug);
 	let bet: Bet;
@@ -47,7 +48,7 @@
 
 	onMount(async () => {
 		await initBet();
-		currentUser = await UserDto.ParseFromJWT(localStorage.getItem("token")!);
+		currentUser = await UserDto.ParseFromJWT(getJwt());
 		if (currentUser != null) {
 			for (let user of bet.participants) {
 				if (user.userId == currentUser.id) {

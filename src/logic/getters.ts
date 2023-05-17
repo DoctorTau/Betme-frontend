@@ -35,9 +35,7 @@ export async function GetAllUsersBets(userId: number): Promise<Bet[]> {
 		throw new Error("Invalid credentials");
 	}
 
-	console.log(response.json);
 	const bets = await response.json();
-	console.log(bets);
 	return bets;
 }
 
