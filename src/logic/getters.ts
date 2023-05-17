@@ -3,6 +3,8 @@ import type { Outcome } from "../models/Outcome";
 import type { User } from "../models/User";
 import type { UserBet } from "../models/UserBet";
 
+const API_URL = import.meta.env.VITE_API_URL as string;
+
 export async function GetIdFromJwt(jwt: string): Promise<number> {
 	if (jwt == "") {
 		throw new Error("Invalid credentials");
@@ -18,7 +20,7 @@ export async function GetIdFromJwt(jwt: string): Promise<number> {
 }
 
 export async function GetUserById(userId: number): Promise<User> {
-	const response = await fetch(`http://betme.pro/fetch/api/User/${userId}`);
+	const response = await fetch(`${API_URL}/api/User/${userId}`);
 	if (!response.ok) {
 		throw new Error("Invalid credentials");
 	}
@@ -28,7 +30,7 @@ export async function GetUserById(userId: number): Promise<User> {
 }
 
 export async function GetAllUsersBets(userId: number): Promise<Bet[]> {
-	const response = await fetch(`http://betme.pro/fetch/api/User/${userId}/bets`);
+	const response = await fetch(`${API_URL}/api/User/${userId}/bets`);
 	if (!response.ok) {
 		throw new Error("Invalid credentials");
 	}
@@ -40,7 +42,7 @@ export async function GetAllUsersBets(userId: number): Promise<Bet[]> {
 }
 
 export async function GetBetById(betId: number): Promise<Bet> {
-	const response = await fetch(`http://betme.pro/fetch/api/Bet/${betId}`);
+	const response = await fetch(`${API_URL}/api/Bet/${betId}`);
 	if (!response.ok) {
 		throw new Error("Invalid credentials");
 	}
@@ -53,16 +55,16 @@ export async function GetBetById(betId: number): Promise<Bet> {
 }
 
 export async function GetAllBetsOutcomes(betId: number): Promise<Outcome[]> {
-	const response = await fetch(`http://betme.pro/fetch/api/Bet/${betId}/outcomes`);
+	const response = await fetch(`${API_URL}/api/Bet/${betId}/outcomes`);
 	if (!response.ok) {
 		throw new Error("Invalid credentials");
 	}
 
 	const outcomes = await response.json();
 	const allBetUsers = await GetAllBetParticipants(betId);
-	for(let i = 0; i < outcomes.length; i++) {
+	for (let i = 0; i < outcomes.length; i++) {
 		outcomes[i].users = [];
-		for(let j = 0; j < allBetUsers.length; j++) {
+		for (let j = 0; j < allBetUsers.length; j++) {
 			if (allBetUsers[j].outcomeId == outcomes[i].id) {
 				outcomes[i].users.push(await GetUserById(allBetUsers[j].userId));
 			}
@@ -72,7 +74,7 @@ export async function GetAllBetsOutcomes(betId: number): Promise<Outcome[]> {
 }
 
 export async function GetAllBetParticipants(betId: number): Promise<UserBet[]> {
-	const response = await fetch(`http://betme.pro/fetch/api/Bet/${betId}/participants`);
+	const response = await fetch(`${API_URL}/api/Bet/${betId}/participants`);
 	if (!response.ok) {
 		throw new Error("Invalid credentials");
 	}

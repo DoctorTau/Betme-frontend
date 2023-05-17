@@ -1,7 +1,9 @@
 import { TrimQuotes } from "./betCreation";
 
+const API_URL = import.meta.env.VITE_API_URL as string;
+
 export async function CheckIfThisUserVote(betId: number, userId: number): Promise<boolean> {
-	const response = await fetch(`http://betme.pro/fetch/api/Vote/${betId}/checkVote/${userId}`, {
+	const response = await fetch(`${API_URL}/api/Vote/${betId}/checkVote/${userId}`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
@@ -16,7 +18,7 @@ export async function CheckIfThisUserVote(betId: number, userId: number): Promis
 }
 
 export async function Vote(betId: number, userId: number, outcomeId: number) {
-	const response = await fetch(`http://betme.pro/fetch/api/Vote/vote`, {
+	const response = await fetch(`${API_URL}/api/Vote/vote`, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",

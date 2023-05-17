@@ -23,11 +23,7 @@
 	<h1 class="title">Пари</h1>
 	<div class="bets">
 		{#each bets as bet}
-			<div class="bet">
-				<div class="bet-info">
-					<BetCard {bet} userId={userDto.id} />
-				</div>
-			</div>
+			<BetCard {bet} userId={userDto.id} />
 		{/each}
 
 		<CreateBetCard />
@@ -48,10 +44,9 @@
 
 	.bets {
 		width: 100%;
-		height: 100%;
+		height: fit-content;
 		display: flex;
 		flex-wrap: wrap;
-		align-items: flex-start;
 		justify-content: flex-start;
 		padding-left: 5%;
 	}
@@ -66,11 +61,15 @@
 	/* for mobile */
 	@media (max-width: 768px) {
 		.bets {
+			height: fit-content;
 			padding-left: 0;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			align-items: center;
 		}
+
+		/* .bet {
+			margin-bottom: 15px;
+		} */
 	}
 </style>

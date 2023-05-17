@@ -1,6 +1,8 @@
 import { goto } from "$app/navigation";
 import { getJwt, getPrevPage, prevPage, tokenStore } from "../store";
 
+const apiURL = import.meta.env.VITE_API_URL as string;
+
 const SavePrevPage = () => {
 	if (!window.location.href.includes("/login")) {
 		prevPage.set(window.location.href);
@@ -18,7 +20,7 @@ export const LoginRedirection = () => {
 };
 
 export const login = async (email: string, password: string) => {
-	const response = await fetch("http://betme.pro/fetch/api/Auth/login", {
+	const response = await fetch(`${apiURL}/api/Auth/login`, {
 		method: "POST",
 		body: JSON.stringify({ email, password }),
 		headers: { "Content-Type": "application/json" }
@@ -35,12 +37,13 @@ export const login = async (email: string, password: string) => {
 			console.log(error);
 		}
 	} else {
+		console.log(response.body);
 		throw new Error("Ошибка при вводе email или пароля");
 	}
 };
 
 export const register = async (name: string, email: string, password: string) => {
-	const response = await fetch("http://betme.pro/fetch/api/Auth/register", {
+	const response = await fetch(`${apiURL}/api/Auth/register`, {
 		method: "POST",
 		body: JSON.stringify({ name, email, password }),
 		headers: { "Content-Type": "application/json" }

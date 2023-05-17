@@ -10,9 +10,8 @@
 
 <style>
 	.betCard {
-		width: 100%;
-		height: 100px;
-		max-width: 200px;
+		width: 250px;
+		height: auto;
 		background-color: var(--betme-yellow);
 		border-radius: 10px;
 		display: flex;
@@ -20,15 +19,15 @@
 		justify-content: center;
 		align-items: center;
 		padding: 10px;
-		margin: 20px;
 		cursor: pointer;
 
+		margin: 0 10px 10px 10px;
 		border-width: 5px;
 		border-color: var(--betme-black);
 	}
 
 	.plus_sign {
-		font-size: 50px;
+		font-size: 100px;
 		font-weight: bold;
 		color: var(--betme-black);
 	}

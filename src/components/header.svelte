@@ -49,7 +49,7 @@
 
 	.profile-button {
 		background-color: white;
-		color: var(--betme-yellow);
+		color: var(--betme-black);
 		border: none;
 		padding: 8px 16px;
 		border-radius: 4px;
@@ -64,6 +64,19 @@
 		font-family: "Monserat", sans-serif;
 		display: flex;
 		cursor: pointer;
-		color: var(--betme-black)
+		color: var(--betme-black);
+	}
+
+	/* for mobile */
+	@media (max-width: 768px) {
+		.topbar h1 {
+			color: white;
+			font-size: 20px;
+			font-weight: bold;
+			font-family: "Monserat", sans-serif;
+			display: flex;
+			cursor: pointer;
+			color: var(--betme-black);
+		}
 	}
 </style>

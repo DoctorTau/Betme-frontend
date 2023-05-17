@@ -17,29 +17,25 @@
 	}
 </script>
 
-<div class="root">
-	<div class="betCard">
-		<div class="betCard__header">
-			<div class="betCard__header__title">{bet.name}</div>
+<div class="betCard">
+	<div class="betCard__header">
+		<div class="betCard__header__title">{bet.name}</div>
+	</div>
+
+	<div class="betCard__body">
+		<div class="betCard__body__description">{bet.description}</div>
+	</div>
+
+	<div class="betCard__outcome">
+		<div class="betCard__outcome__title">
+			Ваше предсказание:
+			<br />
+			{usersOutcome}
 		</div>
+	</div>
 
-		<span />
-
-		<div class="betCard__body">
-			<div class="betCard__body__description">{bet.description}</div>
-		</div>
-
-		<span />
-
-		<div class="betCard__outcome">
-			<div class="betCard__outcome__title">Ваше предсказание: {usersOutcome}</div>
-		</div>
-
-		<span />
-
-		<div class="redirect">
-			<button class="redirect__button" on:click={HandleClick}> Перейти </button>
-		</div>
+	<div class="redirect">
+		<button class="redirect__button" on:click={HandleClick}> Перейти </button>
 	</div>
 </div>
 
@@ -48,29 +44,19 @@
 	All text have Monserat font and right alligment.
 	Text color is var(--betme-black) */
 
-	.root {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin: 0 10px 0 10px;
-	}
-
 	.betCard {
-		width: 100%;
-		max-width: 250px;
-		height: max-content;
+		width: 250px;
+		height: auto;
 		background-color: var(--betme-yellow);
 		border-radius: 10px;
 		display: flex;
 		flex-direction: column;
 		padding: 10px;
 
+		margin: 0 10px 10px 10px;
+
 		border-width: 5px;
 		border-color: var(--betme-black);
-	}
-
-	.betCard span {
-		height: 10px;
 	}
 
 	.betCard__header {
@@ -78,6 +64,8 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		margin-bottom: 10px;
 	}
 
 	.betCard__header__title {
@@ -93,6 +81,7 @@
 		display: flex;
 		justify-content: start;
 		align-items: center;
+		margin-bottom: 10px;
 	}
 
 	.betCard__body__description {
@@ -107,6 +96,8 @@
 		font-size: 18px;
 		font-weight: 400;
 		color: var(--betme-gray);
+
+		margin-bottom: 10px;
 	}
 
 	.redirect {
@@ -114,6 +105,8 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		margin-top: auto;
 	}
 
 	.redirect__button {
@@ -128,5 +121,7 @@
 		color: var(--betme-yellow);
 
 		border-width: 0px;
+
+		margin-top: auto;
 	}
 </style>
