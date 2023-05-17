@@ -36,6 +36,7 @@ export const login = async (email: string, password: string) => {
 		try {
 			goto(getPrevPage());
 		} catch (error) {
+			goto("/");
 			console.log(error);
 		}
 	} else {

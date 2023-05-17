@@ -31,9 +31,10 @@ export function getJwt() {
 }
 
 export function getPrevPage() {
-	const prevPage = localStorage.getItem("prevPage");
-	if (prevPage === null) {
-		return "";
-	}
-	return prevPage;
+	let page: string = "";
+	prevPage.subscribe((value) => {
+		page = value;
+	});
+
+	return page;
 }
